@@ -1,0 +1,34 @@
+{
+    "name": "MouseInput",
+    "maps": [
+        {
+            "name": "Jump",
+            "id": "5cd326ca-ec28-45cb-a652-3be6e5636743",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Value",
+                    "id": "900f7133-f66c-4279-a09c-821b69684fd6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "df2f62c0-c9eb-4d7c-928e-899084ec0660",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
