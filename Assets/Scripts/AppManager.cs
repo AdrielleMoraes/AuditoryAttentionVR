@@ -16,18 +16,18 @@ public class AppManager : MonoBehaviour
     [SerializeField] private string eyeFileName;
 
     [Header("Protocol Settings")]
-    [SerializeField] private int nTrial;
+    [SerializeField] private int nTrials;
+    [SerializeField] private GameObject singleTrial;
+    [SerializeField] private int nSeries;
 
     /*
      * Tasks:
+     * 
+     *  Generate file with performance data
+     *  Create experiment protocol
      *  Start turorial phase
      *  Move to testing phase
-     *  Create log file
-     *  Manage data collection
-     *      1. Trigger event on eeg handler (for now implement a socket)
-     *      2. Synchronize Eye tracker data
-     *      3. Generate file with performance data
-     *  Create experiment protocol
+
      *  
      */
     // Start is called before the first frame update
@@ -44,11 +44,20 @@ public class AppManager : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
-
+        //InvokeRepeating("StartTrial", 2.0f, 5.0f);
     }
 
+    public void StartTrial()
+    {
+        if(singleTrial == null)
+        {
+            Debug.Log("No trial gameobject assigned");
+            return;
+        }    
+        Instantiate(singleTrial);
+    }
 
     void StartEyeGazeData(string filename)
     {
