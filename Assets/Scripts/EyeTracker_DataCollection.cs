@@ -23,9 +23,9 @@ public class EyeTracker_DataCollection : MonoBehaviour
          var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
         // create directory to store files
-        System.IO.Directory.CreateDirectory("Data");
+        System.IO.Directory.CreateDirectory("Data/Eye");
         // initialize txt file
-        writer = new StreamWriter(string.Format("Data/{0}_{1}.txt", filename, unixTimestamp));
+        writer = new StreamWriter(string.Format("Data/Eye/{0}{1}_{2}.txt","EYE", filename, unixTimestamp));
 
         string header = "sample_timestamp,combined_pupil_diameter,combined_originX,combined_originY,combined_originZ," +
             "combined_directionX,combined_directionY,combined_directionZ,combined_openess," +

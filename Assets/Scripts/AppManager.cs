@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,66 +9,62 @@ using UnityEngine;
  *  2. Starts the Tutorial Phase
  */
 
+
 [RequireComponent(typeof(ViveSR.anipal.Eye.SRanipal_Eye_Framework))]
+[RequireComponent(typeof(PerformanceManager))]
 public class AppManager : MonoBehaviour
 {
-    [Header("Eye Tracking Settings")]
+    [Header("Data collection Settings")]
     [SerializeField] private bool saveData;
-    [SerializeField] private string eyeFileName;
+    public string filename;
+    public int participantID;
 
     [Header("Protocol Settings")]
     [SerializeField] private int nTrials;
     [SerializeField] private GameObject singleTrial;
     [SerializeField] private int nSeries;
 
-    /*
-     * Tasks:
-     * 
-     *  Generate file with performance data
-     *  Create experiment protocol
-     *  Start turorial phase
-     *  Move to testing phase
 
-     *  
-     */
-    // Start is called before the first frame update
     void Awake()
     {
-        // enable eye tracker data collection
+        
         if (saveData)
         {
-            StartEyeGazeData(eyeFileName);
-        }
+            // enable eye tracker data collection
+            StartEyeGazeData();
 
+            // enable performance data
+            gameObject.GetComponent<PerformanceManager>().StartRecording();
+        }
+        else
+        {
+            Debug.LogWarning("No data is being collected");
+        }
     }
 
 
-
-    // Update is called once per frame
     void Start()
     {
         //InvokeRepeating("StartTrial", 2.0f, 5.0f);
     }
 
-    public void StartTrial()
-    {
-        if(singleTrial == null)
-        {
-            Debug.Log("No trial gameobject assigned");
-            return;
-        }    
-        Instantiate(singleTrial);
-    }
 
-    void StartEyeGazeData(string filename)
+    void StartEyeGazeData()
     {
         // enable eye gaze data
         GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEyeDataCallback = true;
         GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEye = true;
+        gameObject.AddComponent<EyeTracker_DataCollection>();           
+    }
 
 
-        EyeTracker_DataCollection eyeTracker = gameObject.AddComponent<EyeTracker_DataCollection>();
-        eyeTracker.filename = filename;
-        
+    public void StartTrial()
+    {
+        if (singleTrial == null)
+        {
+            Debug.Log("No trial gameobject assigned");
+            return;
+        }
+        Instantiate(singleTrial);
     }
 }
