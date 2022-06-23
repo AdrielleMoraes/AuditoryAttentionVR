@@ -21,8 +21,8 @@ public class AppManager : MonoBehaviour
 
     [Header("Protocol Settings")]
     [SerializeField] private int nTrials;
-    [SerializeField] private GameObject singleTrial;
     [SerializeField] private int nSeries;
+    [SerializeField] private List<GameObject> SoundStimuli;
 
 
     void Awake()
@@ -60,11 +60,14 @@ public class AppManager : MonoBehaviour
 
     public void StartTrial()
     {
-        if (singleTrial == null)
+        if (SoundStimuli.Count > 0)
         {
-            Debug.Log("No trial gameobject assigned");
+            Debug.Log("No trial gameobjects in the list");
             return;
         }
-        Instantiate(singleTrial);
+
+        // get a random prefab from list and instantiate
+        int prefabIndex = UnityEngine.Random.Range(0, SoundStimuli.Count - 1);
+        Instantiate(SoundStimuli[prefabIndex]);
     }
 }

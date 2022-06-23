@@ -1770,8 +1770,9 @@ MonoBehaviour:
   filename: 
   participantID: 0
   nTrials: 0
-  singleTrial: {fileID: 4412776642253080615, guid: 4e120d26af892f940b0a077a17e61e7d, type: 3}
   nSeries: 0
+  SoundStimuli:
+  - {fileID: 0}
 --- !u!114 &1147460281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2901,6 +2902,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587036722}
   m_CullTransparentMesh: 1
+--- !u!1001 &1723034239
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106515161391894319, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285326499355565490, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
+      propertyPath: m_Name
+      value: Car
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa778916ea3a87947b273b0d030b4130, type: 3}
 --- !u!1 &1787901756
 GameObject:
   m_ObjectHideFlags: 0
