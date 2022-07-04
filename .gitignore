@@ -11,9 +11,7 @@
 /[Mm]emoryCaptures/
 /[Dd]ata/
 
-# Custom for this project
-/[Aa]ssets/GameResources/
-GameResources.meta
+
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -63,3 +61,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Custom for this project
+/[Aa]ssets/GameResources/
+/[Aa]ssets/GameResources.meta
