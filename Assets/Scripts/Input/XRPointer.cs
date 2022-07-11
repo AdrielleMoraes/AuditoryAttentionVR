@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 
 
+
 // use this class to get user input from the controller
 // remember to always enable and disable input actions
 // each input action represents a button/item from the controller 
@@ -29,9 +30,12 @@ public class XRPointer : MonoBehaviour
     /// 
 
     // get one of the buttons from the VR controller
-    private XRInputActions xrInputActions;
+    public XRInputActions xrInputActions;
+
     private InputAction clickTrigger = null;
-    private InputAction clickTrackpad = null;
+    public InputAction clickTrackpad = null;
+
+    
 
     void Awake()
     {
@@ -41,6 +45,7 @@ public class XRPointer : MonoBehaviour
 
         // user input
         xrInputActions = new XRInputActions();
+
     }
     private void Update()
     {
@@ -101,8 +106,6 @@ public class XRPointer : MonoBehaviour
 
         clickTrigger.Enable();
         clickTrackpad.Enable();
-
-
 
         clickTrackpad.performed += onTrackPadDown;
         clickTrackpad.canceled += onTrackPadUP;

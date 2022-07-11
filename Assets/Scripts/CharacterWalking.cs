@@ -14,30 +14,68 @@ public class CharacterWalking : MonoBehaviour
     public float reachDistance = 1.0f;
     public float rotationSpeed = 5.0f;
     public bool allowRotation;
+    public bool allowMovement;
 
+    private Animator anim;
+    public AudioSource audioFootsteps;
+
+    void Awake()
+    {
+        anim = GetComponent<Animator>();
+        audioFootsteps.playOnAwake = false;
+        audioFootsteps.loop = true;
+    }
+
+    private void Start()
+    {
+        if (allowMovement)
+        {
+            startMovement();
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(pathToFollow.path_objs[CurrentWayPointID].position, transform.position);
-        transform.position = Vector3.MoveTowards(transform.position, pathToFollow.path_objs[CurrentWayPointID].position, Time.deltaTime * speed);
-
-
-        if (allowRotation)
+        if (allowMovement)
         {
-            var rotation = Quaternion.LookRotation(pathToFollow.path_objs[CurrentWayPointID].position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+            anim.SetFloat("speed", 1);
+            float distance = Vector3.Distance(pathToFollow.path_objs[CurrentWayPointID].position, transform.position);
+            transform.position = Vector3.MoveTowards(transform.position, pathToFollow.path_objs[CurrentWayPointID].position, Time.deltaTime * speed);
+
+
+            if (allowRotation)
+            {
+                var rotation = Quaternion.LookRotation(pathToFollow.path_objs[CurrentWayPointID].position - transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+            }
+
+
+            if (distance <= reachDistance)
+            {
+                CurrentWayPointID++;
+            }
+
+            if (CurrentWayPointID >= pathToFollow.path_objs.Count)
+            {          
+                CurrentWayPointID = 0;
+                stopMovement();
+            }
         }
 
+    }
 
-        if(distance <= reachDistance)
-        {
-            CurrentWayPointID++;
-        }
+    public void startMovement()
+    {
+        allowMovement = true;
+        audioFootsteps.Play();
+        anim.SetFloat("speed", 1);
+    }
 
-        if(CurrentWayPointID >= pathToFollow.path_objs.Count)
-        {
-            CurrentWayPointID = 0;
-        }
+    public void stopMovement()
+    {
+        anim.SetFloat("speed", 0);
+        allowMovement = false;
+        audioFootsteps.Pause();
     }
 }
