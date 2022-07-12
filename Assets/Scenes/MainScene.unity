@@ -7360,6 +7360,7 @@ GameObject:
   - component: {fileID: 1303491195}
   - component: {fileID: 1303491193}
   - component: {fileID: 1303491192}
+  - component: {fileID: 1303491194}
   m_Layer: 0
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -7394,6 +7395,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayDefaultLenght: 10
+  clickTrackpad:
+    m_Name: Click Trackpad
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a6b661fb-7141-4d81-94fe-460a0b3f3c77
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!120 &1303491193
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -7501,6 +7511,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &1303491194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303491190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f8a1fc626e1f145925e071827779a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollectHeadData: 0
+  CollectControllerTrackingData: 0
 --- !u!114 &1303491195
 MonoBehaviour:
   m_ObjectHideFlags: 0

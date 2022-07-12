@@ -32,6 +32,7 @@ public class AppManager : MonoBehaviour
         {
             // enable eye tracker data collection
             StartEyeGazeData();
+            StartControllerData();
 
             // enable performance data
             gameObject.GetComponent<PerformanceManager>().StartRecording();
@@ -55,6 +56,11 @@ public class AppManager : MonoBehaviour
         GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEyeDataCallback = true;
         GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEye = true;
         gameObject.AddComponent<EyeTracker_DataCollection>();           
+    }
+
+    void StartControllerData()
+    {
+        gameObject.AddComponent<ControllerData>();
     }
 
 
