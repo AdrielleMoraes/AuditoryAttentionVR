@@ -22,8 +22,9 @@ public class XRPointer : MonoBehaviour
     private GameObject currentSelection = null;
     private GameObject previousSelection = null;
 
-
-
+    public Animator anim;
+    public bool animate;
+    public bool showBeam = true;
     /// <summary>
     /// Controller Buttons
     /// </summary>
@@ -35,7 +36,13 @@ public class XRPointer : MonoBehaviour
     private InputAction clickTrigger = null;
     public InputAction clickTrackpad = null;
 
-    
+    // Events that can be called from other scripts
+    public delegate void TriggerAction();
+    public static event TriggerAction OnTriggerClicked;
+
+    public delegate void TrackpadAction();
+    public static event TrackpadAction OnTrackpadClicked;
+
 
     void Awake()
     {
@@ -49,7 +56,7 @@ public class XRPointer : MonoBehaviour
     }
     private void Update()
     {
-        UpdateLine();
+        UpdateLine();  
     }
 
     public void SetVisibility(bool visibility)
@@ -67,7 +74,7 @@ public class XRPointer : MonoBehaviour
         linePoints[1] = transform.position + new Vector3(0, 0, rayDefaultLenght);
 
         lineRenderer.SetPositions(linePoints);
-        lineRenderer.enabled = false;
+        SetVisibility(false);
     }
     private void UpdateLine()
     {
@@ -130,24 +137,47 @@ public class XRPointer : MonoBehaviour
         clickTrackpad.canceled += onXRTriggerUp;
     }
 
-    private void onXRTriggerDown(InputAction.CallbackContext context)
+    private void ChangeAnimation(string animType, float animValue)
     {
-        SetVisibility(true);
+        if (animate)
+        {
+            anim.SetFloat(animType, animValue);
+        }
+        
     }
 
-    private void onXRTriggerUp(InputAction.CallbackContext context)
+    public void onXRTriggerDown(InputAction.CallbackContext context)
+    {
+        SetVisibility(showBeam);
+
+        // play controller animation
+        ChangeAnimation("Pressed", 1);
+
+        // event that will fire on other scripts
+        OnTriggerClicked();
+    }
+
+    public void onXRTriggerUp(InputAction.CallbackContext context)
     {
         SetVisibility(false);
+
+        // play controller animation
+        ChangeAnimation("Pressed", 0);
     }
 
 
     private void onTrackPadDown(InputAction.CallbackContext context)
     {
-            previousSelection = currentSelection;
+        previousSelection = currentSelection;
+        ChangeAnimation("TrackPressed", 1);
+
+        // event that will fire on other scripts
+        OnTrackpadClicked();
     }
 
     private void onTrackPadUP(InputAction.CallbackContext context)
     {
+        ChangeAnimation("TrackPressed", 0);
         if (currentSelection != null)
         {
             if (previousSelection == currentSelection)
