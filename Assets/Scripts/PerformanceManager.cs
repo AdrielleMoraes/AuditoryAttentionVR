@@ -13,25 +13,15 @@ public static class SelectionType
     public const int MoreSaliency = 1;
 }
 
-[RequireComponent(typeof(AppManager))]
 public class PerformanceManager : MonoBehaviour
 {
 
     private bool saveData = false;
-    private string filename;
-    private int participantID;
     private static StreamWriter writer;
-    // Start is called before the first frame update
-
-
-
-    public void StartRecording()
+    
+    public void StartRecording(string filename, int participantID)
     {
         saveData = true;
-
-        AppManager manager = gameObject.GetComponent<AppManager>();
-        filename = manager.filename;
-        participantID = manager.participantID;
 
         // get current timestamp
         var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();

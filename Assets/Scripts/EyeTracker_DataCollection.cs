@@ -84,8 +84,7 @@ public class EyeTracker_DataCollection : MonoBehaviour
             writer.Close();
         }
         catch (Exception ex)
-        {
-            Debug.Log("File has been closed before");
+        {           
             Debug.Log(ex.Message);
         }
             

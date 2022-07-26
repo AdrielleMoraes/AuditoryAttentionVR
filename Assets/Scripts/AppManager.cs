@@ -35,7 +35,7 @@ public class AppManager : MonoBehaviour
             StartControllerData();
 
             // enable performance data
-            gameObject.GetComponent<PerformanceManager>().StartRecording();
+            gameObject.GetComponent<PerformanceManager>().StartRecording(filename, participantID);
         }
         else
         {
