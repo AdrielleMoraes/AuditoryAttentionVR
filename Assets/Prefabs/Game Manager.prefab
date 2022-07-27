@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 79779530634062285}
   - component: {fileID: 79779530634062287}
   - component: {fileID: 79779530634062273}
-  - component: {fileID: 79779530634062272}
   - component: {fileID: 79779530634062274}
+  - component: {fileID: 79779530634062272}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -76,6 +76,18 @@ MonoBehaviour:
   EnableEye: 0
   EnableEyeDataCallback: 0
   EnableEyeVersion: 0
+--- !u!114 &79779530634062274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79779530634062284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11c703d477a5e243ba02537ea07fab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &79779530634062272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,15 +107,3 @@ MonoBehaviour:
   nSeries: 0
   SoundStimuli:
   - {fileID: 0}
---- !u!114 &79779530634062274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79779530634062284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11c703d477a5e243ba02537ea07fab9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

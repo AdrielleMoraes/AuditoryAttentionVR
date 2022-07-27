@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,14 +21,20 @@ public class AppManager : MonoBehaviour
     public int participantID;
 
     [Header("Protocol Settings")]
-    [SerializeField] private int nTrials;
-    [SerializeField] private int nSeries;
-    [SerializeField] private List<GameObject> SoundStimuli;
+    [SerializeField] private int nRep; // total number of trials per category
+    [SerializeField] private List<GameObject> AuditoryStimuli; // list of auditory stimuli
+    [SerializeField] private List<GameObject> AudioVisualStimuli; // list of AV stimuli
+    public GameObject[] experimentTrials;
 
+    // interval in between stimuli in seconds
+    [SerializeField] [Range(0, 5)] private int intervalMin;
+    [SerializeField] [Range(5, 10)] private int intervalMax;
+
+    int currentIndex;
+    bool playNext = true;
 
     void Awake()
-    {
-        
+    {        
         if (saveData)
         {
             // enable eye tracker data collection
@@ -45,8 +52,44 @@ public class AppManager : MonoBehaviour
 
 
     void Start()
+    {       
+        FillTrialsArray();
+        StartTrial();
+    }
+
+    private void Update()
     {
-        //InvokeRepeating("StartTrial", 2.0f, 5.0f);
+        if (playNext)
+        {
+            StartCoroutine(PlayTrial());
+        }
+    }
+
+    void FillTrialsArray()
+    {
+        System.Random rnd = new System.Random(); // randomise
+
+        // first concatenate all types
+        GameObject[] groupedTrials = AudioVisualStimuli.Concat(AuditoryStimuli).ToArray();
+
+        // create null elements
+        GameObject[] nullElements = new GameObject[AuditoryStimuli.Count + groupedTrials.Length];
+
+        // merge all together
+        groupedTrials.CopyTo(nullElements, AuditoryStimuli.Count);
+
+        // now create a new array to accommodate copied stimuli
+        experimentTrials = new GameObject[nRep*nullElements.Length];
+
+        for (int i = 0; i <nRep; i++)
+        {
+            //Shuffle items in original array           
+            nullElements = nullElements.OrderBy(x => rnd.Next()).ToArray();
+
+            // merge all together
+            nullElements.CopyTo(experimentTrials, i* nullElements.Length);
+        }
+
     }
 
 
@@ -66,14 +109,32 @@ public class AppManager : MonoBehaviour
 
     public void StartTrial()
     {
-        if (SoundStimuli.Count > 0)
-        {
-            Debug.Log("No trial gameobjects in the list");
-            return;
-        }
 
-        // get a random prefab from list and instantiate
-        int prefabIndex = UnityEngine.Random.Range(0, SoundStimuli.Count - 1);
-        Instantiate(SoundStimuli[prefabIndex]);
+
+        StartCoroutine(PlayTrial());
+    }
+
+    IEnumerator PlayTrial()
+    {
+        playNext = false;
+        if (playNext)
+        {
+
+            if (experimentTrials.Length <= 0 || currentIndex > experimentTrials.Length)
+            {
+                Debug.Log("No trial gameobjects in the list");
+            }
+            else
+            {
+                if (experimentTrials[currentIndex] != null)
+                {
+                    Instantiate(experimentTrials[currentIndex]);
+                }
+
+                currentIndex++;
+            }
+        }
+        yield return new WaitForSeconds(2);
+        playNext = true;
     }
 }
