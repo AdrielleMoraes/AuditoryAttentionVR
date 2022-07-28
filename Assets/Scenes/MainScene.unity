@@ -9012,8 +9012,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
+      propertyPath: nRep
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: nTrials
-      value: 206
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: filename
@@ -9025,15 +9029,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: intervalMax
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: intervalMin
-      value: 1
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
+      propertyPath: firstWaitTime
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: AuditoryStimuli.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: AudioVisualStimuli.Array.size
@@ -9046,7 +9054,7 @@ PrefabInstance:
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: AuditoryStimuli.Array.data[1]
       value: 
-      objectReference: {fileID: 189786461625299500, guid: 914eefd5079637c4fac4a0f60ed93370, type: 3}
+      objectReference: {fileID: 2240813805888553074, guid: 968fe44814b6a034182fbc114551b8e0, type: 3}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: AuditoryStimuli.Array.data[2]
       value: 
