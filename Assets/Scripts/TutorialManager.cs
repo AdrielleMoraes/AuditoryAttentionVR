@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 
 [RequireComponent(typeof(ViveSR.anipal.Eye.SRanipal_Eye_Framework))]
-[RequireComponent(typeof(PerformanceManager))]
 public class TutorialManager : MonoBehaviour
 {
 

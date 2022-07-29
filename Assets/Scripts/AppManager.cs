@@ -13,7 +13,6 @@ using System.IO;
 
 
 [RequireComponent(typeof(ViveSR.anipal.Eye.SRanipal_Eye_Framework))]
-[RequireComponent(typeof(PerformanceManager))]
 public class AppManager : MonoBehaviour
 {
     [Header("Data collection Settings")]
@@ -189,14 +188,18 @@ public class AppManager : MonoBehaviour
         else
         {
             TrialInfo objectInfo = currentObject.GetComponent<TrialInfo>();
-            string stimulus_type = objectInfo.Type;
+            string stimulus_type = objectInfo.Type.ToString();
             string stimulus_name = objectInfo.name;
             int stimulus_intensity = objectInfo.Intensity;
             data_row = string.Format("{0},{1},{2},{3},{4}",
             trial_start, currentIndex, stimulus_type, stimulus_name, trial_duration, stimulus_intensity);
         }
 
-        SaveData(data_row);
+        if (saveData)
+        {
+            SaveData(data_row);
+        }
+
     }
 
     void OnApplicationQuit()
