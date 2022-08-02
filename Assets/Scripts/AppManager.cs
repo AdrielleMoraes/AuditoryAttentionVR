@@ -22,11 +22,13 @@ public class AppManager : MonoBehaviour
     private static StreamWriter writer;
 
     [Header("Protocol Settings")]
+    [SerializeField] private bool xParadigmType;
     [SerializeField] private float firstWaitTime;
     [SerializeField] private int nRep; // total number of trials per category
     [SerializeField] private List<GameObject> AuditoryStimuli; // list of auditory stimuli
     [SerializeField] private List<GameObject> AudioVisualStimuli; // list of AV stimuli
     GameObject[] experimentTrials;
+    [SerializeField] private bool paradigmReversed; // use this to pause and play a different message to users
 
     // interval in between stimuli in miliseconds
     [SerializeField] [Range(0, 3000)] private int intervalMin;
@@ -43,6 +45,11 @@ public class AppManager : MonoBehaviour
 
     void Start()
     {
+        rnd = new System.Random(); // use this to generate random values
+
+        // first define if it starts with X-paradigm or no X-paradigm
+        xParadigmType = rnd.NextDouble() > 0.5;
+
         if (saveData)
         {
             StartEyeGazeData(); // enable eye tracker data collection
@@ -54,13 +61,13 @@ public class AppManager : MonoBehaviour
             Debug.LogWarning("No data is being collected");
         }
 
-        rnd = new System.Random(); // use this to generate random values
-
         // generate array with stimuli
         FillTrialsArray();
 
-        // put a timer here before the experiment begins
+        // ready to play first trial
         playNext = true;
+
+        // timer initial value before the first trial begins
         targetTime = firstWaitTime;
     }
 
@@ -174,9 +181,6 @@ public class AppManager : MonoBehaviour
         int interval = rnd.Next(intervalMin, intervalMax);
         yield return new WaitForSeconds(interval/1000);
 
-        // enable next trial
-        playNext = true;
-
         //save data
         var trial_duration = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - trial_start;
         string data_row = "";
@@ -200,10 +204,17 @@ public class AppManager : MonoBehaviour
             SaveData(data_row);
         }
 
+
+        // enable next trial
+        playNext = true;
     }
 
     void OnApplicationQuit()
     {
+        if (!saveData)
+        {
+            return;
+        }
         try
         {
             // end writing to file
