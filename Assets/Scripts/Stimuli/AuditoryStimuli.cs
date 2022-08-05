@@ -13,12 +13,9 @@ public class AuditoryStimuli : MonoBehaviour
     };
 
     public ENUMmovementType movementType;
-    [SerializeField] [Range(1f, 2f)] private int loudnessLevel;
-    [SerializeField] [Range (1.5f, 10.0f)]private float duration;
 
     public float movementSpeed = 2;
 
-    private float timeRemaining;
 
     private AudioSource m_audio;
     // Start is called before the first frame update
@@ -27,8 +24,6 @@ public class AuditoryStimuli : MonoBehaviour
         m_audio = GetComponent<AudioSource>();
         m_audio.spatialBlend = 1;
         m_audio.PlayDelayed(0);
-
-        timeRemaining = duration;
     }
 
     // Update is called once per frame
@@ -53,14 +48,6 @@ public class AuditoryStimuli : MonoBehaviour
             default:
                 break;
         }
-
-        if (timeRemaining > 0)
-        {
-            timeRemaining -= Time.deltaTime;           
-        }
-        else
-        {
-            GameObject.Destroy(gameObject);
-        }
     }
+
 }

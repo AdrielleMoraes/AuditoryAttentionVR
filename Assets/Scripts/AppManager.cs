@@ -172,7 +172,7 @@ public class AppManager : MonoBehaviour
         {
             if (experimentTrials[currentIndex] != null)
             {
-                currentObject = experimentTrials[currentIndex];
+                currentObject = experimentTrials[currentIndex];                
                 Instantiate(currentObject);
             }
             currentIndex++; // move pointer forward
@@ -183,7 +183,7 @@ public class AppManager : MonoBehaviour
 
         //save data
         var trial_duration = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - trial_start;
-        string data_row = "";
+        string data_row;
         if (currentObject == null)
         {
             data_row = string.Format("{0},{1},{2},{3},{4}",

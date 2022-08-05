@@ -32,6 +32,7 @@ public class CharacterWalking : MonoBehaviour
         {
             startMovement();
         }
+
     }
 
     // Update is called once per frame
@@ -40,6 +41,12 @@ public class CharacterWalking : MonoBehaviour
         if (allowMovement)
         {
             anim.SetFloat("speed", 1);
+
+            if (!audioFootsteps.isPlaying)
+            {
+                audioFootsteps.Play();
+            }
+
             float distance = Vector3.Distance(pathToFollow.path_objs[CurrentWayPointID].position, transform.position);
             transform.position = Vector3.MoveTowards(transform.position, pathToFollow.path_objs[CurrentWayPointID].position, Time.deltaTime * speed);
 
@@ -62,13 +69,16 @@ public class CharacterWalking : MonoBehaviour
                 stopMovement();
             }
         }
-
+        else if (audioFootsteps.isPlaying)
+        {
+            Debug.Log("here");
+            stopMovement();
+        }
     }
 
     public void startMovement()
     {
         allowMovement = true;
-        audioFootsteps.Play();
         anim.SetFloat("speed", 1);
     }
 

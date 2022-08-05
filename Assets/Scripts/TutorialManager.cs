@@ -19,22 +19,16 @@ public class TutorialManager : MonoBehaviour
     [Header("Controller Settings")]
     public GameObject controller;
     public GameObject controllerTrigger;
-    public GameObject controllerTrackpad;
     public Material highlightMaterial;
     public Material regularMaterial;
     private bool isTriggerEnabled = false;
-    private bool isTrackpadEnabled = false;
 
     [Header("GUI Settings")]
     public TextMeshProUGUI textDisplay;
-    public Button startButton;
     public string[] displayMessages;
     // duration of the first message
     public float targetTime = 10.0f;
     private int currentMessage = 0;
-
-
-
 
     private IEnumerator coroutine;
     void Awake()
@@ -55,13 +49,11 @@ public class TutorialManager : MonoBehaviour
     private void OnEnable()
     {
         XRPointer.OnTriggerClicked += onClickTrigger;
-        XRPointer.OnTrackpadClicked += onClickTrackpad;
     }
 
     private void OnDisable()
     {
         XRPointer.OnTriggerClicked -= onClickTrigger;
-        XRPointer.OnTrackpadClicked -= onClickTrackpad;
     }
 
     void Start()
@@ -73,10 +65,6 @@ public class TutorialManager : MonoBehaviour
         controller.SetActive(false);
         controller.transform.parent.gameObject.GetComponent<XRPointer>().animate = true;
         controller.transform.parent.gameObject.GetComponent<XRPointer>().showBeam = false;
-
-        // disable start button. It will be enabled after the tutorial finishes
-        startButton.enabled = false;
-        startButton.onClick.AddListener(StartButtonOnClick);
 
         // Start coroutine.
         Start_Coroutine();
@@ -113,14 +101,6 @@ public class TutorialManager : MonoBehaviour
         else if (currentMessage == 2)
         {
             controllerTrigger.GetComponent<Renderer>().material = regularMaterial;
-            // enable selection with trackpad
-            isTrackpadEnabled = true;
-            controllerTrackpad.GetComponent<Renderer>().material = highlightMaterial;
-        }
-
-        else if (currentMessage == 3)
-        {
-            controllerTrackpad.GetComponent<Renderer>().material = regularMaterial;
         }
 
         PlayNextMessage();
@@ -141,10 +121,6 @@ public class TutorialManager : MonoBehaviour
         // check if trigger can be enabled now
         if (isTriggerEnabled)
         {
-            // enable laser beam
-            controller.transform.parent.gameObject.GetComponent<XRPointer>().showBeam = true;
-            controller.transform.parent.gameObject.GetComponent<XRPointer>().SetVisibility(true);
-
             // move on to next message
             Start_Coroutine();
 
@@ -152,27 +128,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    void onClickTrackpad()
-    {
-        if (isTrackpadEnabled)
-        {
-            // move on to next message
-            Start_Coroutine();
-
-            isTrackpadEnabled = false;
-        }
-    }
-
-    void DisplayFinalMessage()
-    {
-        // display last message in array
-        textDisplay.text = displayMessages[displayMessages.Length -1];
-
-        // enable start button
-        startButton.enabled = true;
-    }
-
-    void StartButtonOnClick()
+    void StartExperiment()
     {
         SceneManager.LoadScene("MainScene");
     }

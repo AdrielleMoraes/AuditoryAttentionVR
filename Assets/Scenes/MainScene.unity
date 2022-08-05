@@ -8097,7 +8097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1653828168
 Transform:
   m_ObjectHideFlags: 0
@@ -8542,6 +8542,30 @@ Transform:
   m_Father: {fileID: 893210336}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1952013463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8876302019927969609, guid: a6f1362da3a5478409ed5bc093742d21, type: 3}
+  m_PrefabInstance: {fileID: 8876302020618912225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1952013466
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952013463}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f56be72375db92449bab9aae555b0514, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1954627938
 GameObject:
   m_ObjectHideFlags: 0
@@ -8944,6 +8968,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: intervalMax
       value: 10000
       objectReference: {fileID: 0}
@@ -8961,7 +8989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: AudioVisualStimuli.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: AuditoryStimuli.Array.data[0]
@@ -8979,6 +9007,10 @@ PrefabInstance:
       propertyPath: AudioVisualStimuli.Array.data[0]
       value: 
       objectReference: {fileID: 7502355888230914145, guid: 6eb10f29ace7bfe40b2797c3f4b9238b, type: 3}
+    - target: {fileID: 79779530634062272, guid: f21953beea967a94988c14f659c33965, type: 3}
+      propertyPath: AudioVisualStimuli.Array.data[1]
+      value: 
+      objectReference: {fileID: 9216665161068479234, guid: 349adfc2d94d6d14bb9a1d4f0c337b7d, type: 3}
     - target: {fileID: 79779530634062284, guid: f21953beea967a94988c14f659c33965, type: 3}
       propertyPath: m_Name
       value: Game Manager
@@ -13595,7 +13627,7 @@ MonoBehaviour:
   randomHoldDurationMax: 0.5
   configReady: 1
   warnOnNullRefs: 1
-  inspSalsaLinked: 1
+  inspSalsaLinked: 0
   inspStateFoldoutProcessing: 0
   inspStateFoldoutSettings: 0
   inspStateFoldoutEmotes: 0
@@ -14084,7 +14116,7 @@ MonoBehaviour:
   reachDistance: 1
   rotationSpeed: 5
   allowRotation: 1
-  allowMovement: 1
+  allowMovement: 0
   audioFootsteps: {fileID: 7624211810770990794}
 --- !u!82 &7624211810770990794
 AudioSource:
@@ -19577,6 +19609,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8876302021399188226, guid: a6f1362da3a5478409ed5bc093742d21, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1952013466}
     - target: {fileID: 8876302021785673814, guid: a6f1362da3a5478409ed5bc093742d21, type: 3}
       propertyPath: m_InteractionManager
       value: 
