@@ -43,8 +43,7 @@ public class AppManager : MonoBehaviour
     float targetTime;
 
 
-    void Start()
-    {
+    void Start(){
         rnd = new System.Random(); // use this to generate random values
 
         // first define if it starts with X-paradigm or no X-paradigm
@@ -71,8 +70,7 @@ public class AppManager : MonoBehaviour
         targetTime = firstWaitTime;
     }
 
-    void CreateDataFile()
-    {
+    void CreateDataFile(){
         // get current timestamp
         var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
@@ -86,12 +84,12 @@ public class AppManager : MonoBehaviour
         string header = "timestamp, id, stimulus_type, name, duration, intensity";
         writer.WriteLine(header);
     }
-    void SaveData(string input)
-    {
+
+    void SaveData(string input){
         writer.WriteLine(input); 
     }
-    private void Update()
-    {
+
+    private void Update(){
         if (timerOn)
         {
             targetTime -= Time.deltaTime;
@@ -111,12 +109,18 @@ public class AppManager : MonoBehaviour
 
         if (playNext)
         {
+          // check if not in the middle of test and make sure this will run only once
+          if(currentIndex > experimentTrials.Length/2)
+          {
+            // pause trials and return message and timer
+            Debug.Log("Reached middle of experiment");
+            Time.timeScale = 0;
+          }
             StartTrial();
         }
     }
 
-    void FillTrialsArray()
-    {
+    void FillTrialsArray(){
         // first concatenate all types
         GameObject[] groupedTrials = AudioVisualStimuli.Concat(AuditoryStimuli).ToArray();
 
@@ -140,26 +144,23 @@ public class AppManager : MonoBehaviour
 
     }
 
-    void StartEyeGazeData()
-    {
+    void StartEyeGazeData(){
         // enable eye gaze data
         GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEyeDataCallback = true;
         GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEye = true;
         gameObject.AddComponent<EyeTracker_DataCollection>();           
     }
 
-    void StartControllerData()
-    {
+    void StartControllerData(){
         gameObject.AddComponent<ControllerData>();
     }
 
-    void StartTrial()
-    {
+    void StartTrial(){
         playNext = false;
         StartCoroutine(PlayTrial());
     }
-    IEnumerator PlayTrial()
-    {
+
+    IEnumerator PlayTrial(){
         GameObject currentObject = null;
         // get current timestamp
         var trial_start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -209,8 +210,7 @@ public class AppManager : MonoBehaviour
         playNext = true;
     }
 
-    void OnApplicationQuit()
-    {
+    void OnApplicationQuit(){
         if (!saveData)
         {
             return;
@@ -225,5 +225,11 @@ public class AppManager : MonoBehaviour
         {
             Debug.Log(ex.Message);
         }
+    }
+
+    // trigger this after 
+    public void ContinueTrials{
+      // unpause game
+      Time.timeScale = 1;
     }
 }
