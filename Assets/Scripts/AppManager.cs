@@ -22,17 +22,17 @@ public class AppManager : MonoBehaviour
     private static StreamWriter writer;
 
     [Header("Protocol Settings")]
-    [SerializeField] private bool xParadigmType;
     [SerializeField] private float firstWaitTime;
     [SerializeField] private int nRep; // total number of trials per category
     [SerializeField] private List<GameObject> AuditoryStimuli; // list of auditory stimuli
     [SerializeField] private List<GameObject> AudioVisualStimuli; // list of AV stimuli
     GameObject[] experimentTrials;
     [SerializeField] private bool paradigmReversed; // use this to pause and play a different message to users
+    [SerializeField] private AudioSource mainAudio;
 
     // interval in between stimuli in miliseconds
-    [SerializeField] [Range(0, 3000)] private int intervalMin;
-    [SerializeField] [Range(3000, 10000)] private int intervalMax;
+    [SerializeField] [Range(3000, 5000)] private int intervalMin;
+    [SerializeField] [Range(5000, 10000)] private int intervalMax = 5000;
     System.Random rnd;
 
     int currentIndex;
@@ -42,12 +42,8 @@ public class AppManager : MonoBehaviour
     bool timerOn = true;
     float targetTime;
 
-
     void Start(){
         rnd = new System.Random(); // use this to generate random values
-
-        // first define if it starts with X-paradigm or no X-paradigm
-        xParadigmType = rnd.NextDouble() > 0.5;
 
         if (saveData)
         {
@@ -109,13 +105,19 @@ public class AppManager : MonoBehaviour
 
         if (playNext)
         {
-          // check if not in the middle of test and make sure this will run only once
-          if(currentIndex > experimentTrials.Length/2)
-          {
-            // pause trials and return message and timer
-            Debug.Log("Reached middle of experiment");
-            Time.timeScale = 0;
-          }
+            // check if not in the middle of test and make sure this will run only once
+            if(currentIndex >= experimentTrials.Length)
+            {
+                // pause trials and return message and timer
+                Debug.Log("Reached end of experiment");
+                Time.timeScale = 0;
+
+                Application.Quit();
+            }
+            if (!mainAudio.isPlaying)
+            {
+                Debug.Log("Reached end of experiment");
+            }
             StartTrial();
         }
     }
@@ -228,7 +230,7 @@ public class AppManager : MonoBehaviour
     }
 
     // trigger this after 
-    public void ContinueTrials{
+    public void ContinueTrials(){
       // unpause game
       Time.timeScale = 1;
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class CharacterWalking : MonoBehaviour
 {
     public EditorPath pathToFollow;
+    public GameObject playerTransform;
 
     public int CurrentWayPointID = 0;
 
@@ -74,6 +75,11 @@ public class CharacterWalking : MonoBehaviour
             Debug.Log("here");
             stopMovement();
         }
+        else
+        {
+            var rotation = Quaternion.LookRotation(playerTransform.transform.position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
     public void startMovement()
@@ -87,5 +93,6 @@ public class CharacterWalking : MonoBehaviour
         anim.SetFloat("speed", 0);
         allowMovement = false;
         audioFootsteps.Pause();
+
     }
 }

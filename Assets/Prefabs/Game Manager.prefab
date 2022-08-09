@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &79779530634062284
+--- !u!1 &2363397958414453042
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 79779530634062286}
-  - component: {fileID: 79779530634062285}
-  - component: {fileID: 79779530634062287}
-  - component: {fileID: 79779530634062273}
-  - component: {fileID: 79779530634062274}
-  - component: {fileID: 79779530634062272}
+  - component: {fileID: 2363397958414453040}
+  - component: {fileID: 2363397958414453043}
+  - component: {fileID: 2363397958414453041}
+  - component: {fileID: 2363397958414453055}
+  - component: {fileID: 2438442893906472604}
+  - component: {fileID: 2363397958414453047}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -21,13 +21,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &79779530634062286
+--- !u!4 &2363397958414453040
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79779530634062284}
+  m_GameObject: {fileID: 2363397958414453042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,25 +35,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &79779530634062285
+--- !u!114 &2363397958414453043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79779530634062284}
+  m_GameObject: {fileID: 2363397958414453042}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &79779530634062287
+--- !u!114 &2363397958414453041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79779530634062284}
+  m_GameObject: {fileID: 2363397958414453042}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017c5e3933235514c9520e1dace2a4b2, type: 3}
@@ -61,13 +61,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActionAssets:
   - {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
---- !u!114 &79779530634062273
+--- !u!114 &2363397958414453055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79779530634062284}
+  m_GameObject: {fileID: 2363397958414453042}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47613961cde0a8b4aa4f79219b7e523c, type: 3}
@@ -76,34 +76,129 @@ MonoBehaviour:
   EnableEye: 0
   EnableEyeDataCallback: 0
   EnableEyeVersion: 0
---- !u!114 &79779530634062274
+--- !u!114 &2438442893906472604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79779530634062284}
+  m_GameObject: {fileID: 2363397958414453042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11c703d477a5e243ba02537ea07fab9, type: 3}
+  m_Script: {fileID: 11500000, guid: 45e209e0129639a4999ec414edd022fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &79779530634062272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79779530634062284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff41ed61e88c31c4ea088845e46e77f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveData: 1
+  saveData: 0
   filename: 
   participantID: 0
-  nTrials: 0
-  nSeries: 0
-  SoundStimuli:
-  - {fileID: 0}
+  controller: {fileID: 0}
+  controllerTrigger: {fileID: 0}
+  highlightMaterial: {fileID: 924066207457597659, guid: f7600ab3abb243046841d7050b550385, type: 3}
+  regularMaterial: {fileID: 2100000, guid: 5a44c572c7591d940997a7bae9555e46, type: 3}
+  textDisplay: {fileID: 0}
+  displayMessages:
+  - Welcome to the Virtual Environment. Feel free to explore the areas around you.
+    You can look at all directions.
+  - 'This is a tutorial scene. You will be moved to the classroom scenario shortly.
+    You have to pay attention to what the speaker is saying '
+  - Use the controller to press the green button whenever you listen to the word
+    "HOUSE"
+  - Now, press the green button
+  - 'Tutorial Session is now finished and you will be moved to the classroom in:'
+  targetTime: 5
+--- !u!82 &2363397958414453047
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2363397958414453042}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8e126dd5c9daeea46a435e14bc9822bc, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

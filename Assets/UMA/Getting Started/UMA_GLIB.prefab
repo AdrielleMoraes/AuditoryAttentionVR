@@ -66,8 +66,7 @@ MonoBehaviour:
   AtlasOverflowFitMethod: 1
   FitPercentageDecrease: 0.5
   SharperFitTextures: 1
-  defaultOverlayAsset: {fileID: 11400000, guid: fe30fbf67b51de8499624c6913a39e64,
-    type: 2}
+  defaultOverlayAsset: {fileID: 11400000, guid: fe30fbf67b51de8499624c6913a39e64, type: 2}
   ignoreTag: UMAIgnore
   SaveAndRestoreIgnoredItems: 0
   meshCombiner: {fileID: 7275351159514515506}
