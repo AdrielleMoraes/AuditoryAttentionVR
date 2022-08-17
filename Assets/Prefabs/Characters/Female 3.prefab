@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4844327504893627187}
-  - component: {fileID: 6989152685561848256}
   m_Layer: 0
   m_Name: mixamorig2:LeftUpLeg
   m_TagString: Untagged
@@ -32,20 +31,6 @@ Transform:
   m_Father: {fileID: 844521094614214719}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6989152685561848256
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82357345859870279}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.07
-  m_Height: 0.43
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!1 &130253396057550929
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,10 +984,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.03
-  m_Height: 0.25
+  m_Radius: 0.011993108
+  m_Height: 0.24999994
   m_Direction: 1
-  m_Center: {x: 0, y: -0.12, z: 0.07}
+  m_Center: {x: 0.00000002103094, y: -0.11999993, z: 0.0330069}
 --- !u!1 &2255609360510546766
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,7 +1769,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7786828875582387270}
-  - component: {fileID: 1489643479393560065}
   m_Layer: 0
   m_Name: mixamorig2:RightUpLeg
   m_TagString: Untagged
@@ -1807,20 +1791,6 @@ Transform:
   m_Father: {fileID: 844521094614214719}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1489643479393560065
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4637158392778100216}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.07
-  m_Height: 0.43
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!1 &4825236410096866152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,10 +2282,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.03
-  m_Height: 0.25
+  m_Radius: 0.011993108
+  m_Height: 0.24999994
   m_Direction: 1
-  m_Center: {x: 0, y: -0.12, z: 0.07}
+  m_Center: {x: 0.00000002103094, y: -0.11999993, z: 0.0330069}
 --- !u!1 &6293471960761075571
 GameObject:
   m_ObjectHideFlags: 0
