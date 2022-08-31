@@ -5,16 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-
-[RequireComponent(typeof(ViveSR.anipal.Eye.SRanipal_Eye_Framework))]
 public class TutorialManager : MonoBehaviour
 {
-
-    [Header("Data collection Settings")]
-    [SerializeField] private bool saveData;
-    public string filename;
-    public int participantID;
 
     [Header("Controller Settings")]
     public GameObject controller;
@@ -25,42 +17,25 @@ public class TutorialManager : MonoBehaviour
 
     [Header("GUI Settings")]
     public TextMeshProUGUI textDisplay;
-    public string[] displayMessages;
+    public TextMeshProUGUI textCount;
+    public string[] displayTutorialMessages;
+    public string[] displayMidMessages;
+
     // duration of the first message
     public float targetTime = 10.0f;
     private int currentMessage = 0;
-    
-    private AudioSource tutorialAudio;
+    private int buttonCount = 0;
 
     private IEnumerator coroutine;
 
     private int countdownTime = 5;
+
     void Awake()
     {
-        Debug.Log("Tutorial Phase Started.");
+        Debug.Log("Tutorial Phase Started");
 
-        if (saveData)
-        {
-            // enable eye tracker and controller data collection
-            SetupDataCollection();           
-        }
-        else
-        {
-            Debug.LogWarning("Tutorial Phase: No data is being collected");
-        }
-
-        tutorialAudio = GetComponent<AudioSource>();
+        textCount.gameObject.SetActive(false);
     }
-
-    void SetupDataCollection()
-    {
-        // enable eye gaze data
-        GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEyeDataCallback = true;
-        GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEye = true;
-        gameObject.AddComponent<EyeTracker_DataCollection>();
-        gameObject.AddComponent<ControllerData>();
-    }
-
 
     private void OnEnable()
     {
@@ -74,103 +49,174 @@ public class TutorialManager : MonoBehaviour
 
     void Start()
     {
-        // set first message
-        PlayNextMessage();
-
         //hide controller for now
         controller.SetActive(false);
         controller.transform.parent.gameObject.GetComponent<XRPointer>().animate = true;
         controller.transform.parent.gameObject.GetComponent<XRPointer>().showBeam = false;
 
-        // Start coroutine.
-        Start_Coroutine();
+        // set first message
+        PlayNextMessage(true);
     }
 
-    public void Start_Coroutine()
+    public void PlayNextMessage(bool isTutorial)
     {
         // Start coroutine.
-        coroutine = WaitAndPrint(targetTime);
+        coroutine = WaitAndPrint(targetTime, isTutorial);
         StartCoroutine(coroutine);
     }
 
-    private IEnumerator WaitAndPrint(float waitTime)
+    private IEnumerator WaitAndPrint(float waitTime, bool isTutorial)
     {
         yield return new WaitForSeconds(waitTime);
 
-        if (currentMessage <= 2)
+        if (isTutorial)
         {
-            // move on to next message
-            Start_Coroutine();
+            PrintNextTutorialMessage();
         }
-        else if (currentMessage == 3)
+        else
         {
-
-            controller.SetActive(true);
-            controllerTrigger.GetComponent<Renderer>().material = highlightMaterial;
-            isTriggerEnabled = true;
-
-            // play sound
-            tutorialAudio.Play();
-
-
+            PrintNextMidMessage();
         }
-        else if (currentMessage == 4)
-        {
-            controllerTrigger.GetComponent<Renderer>().material = regularMaterial;
-        }
-
-        PlayNextMessage();
+        
     }
 
-    public void PlayNextMessage()
+    void PrintNextTutorialMessage() { 
+        //jump to next message if available
+        if (currentMessage < displayTutorialMessages.Length)
+        {
+            textDisplay.text = displayTutorialMessages[currentMessage];           
+            currentMessage++;
+
+            // last message
+            if (currentMessage == displayTutorialMessages.Length)
+            {
+                isTriggerEnabled = false;
+                // Start coroutine.
+                IEnumerator endCoroutine = CountdownRoutine(1, displayTutorialMessages[currentMessage - 1],1);
+                StartCoroutine(endCoroutine);
+                return;
+            }
+            switch (currentMessage)
+            {           
+                case 4:           
+                    controller.SetActive(true);
+                    controllerTrigger.GetComponent<Renderer>().material = highlightMaterial;
+                    isTriggerEnabled = true;
+
+                    // show message
+                    textCount.gameObject.SetActive(true);
+                    break;
+
+                case 5:
+                    controllerTrigger.GetComponent<Renderer>().material = regularMaterial;
+                    break;
+
+                default:
+                    // move on to next message
+                    PlayNextMessage(true);
+                    break;
+            }
+        }   
+    }
+
+    public void PrintNextMidMessage()
     {
         //jump to next message if available
-        if (currentMessage < displayMessages.Length)
+        if (currentMessage <= displayMidMessages.Length)
         {
-            textDisplay.text = displayMessages[currentMessage];           
+            textDisplay.text = displayMidMessages[currentMessage];
             currentMessage++;
-        }
 
-        // run this if it is the last message
-        if (currentMessage == displayMessages.Length)
-        {
-            StartExperiment();
-        }      
+            // last message
+            if (currentMessage == displayMidMessages.Length)
+            {
+                // Start coroutine.
+                IEnumerator endCoroutine = CountdownRoutine(1, displayMidMessages[currentMessage - 1],2);
+                StartCoroutine(endCoroutine);
+                Debug.Log("End of mid experiment");
+                return;
+            }
+
+            switch (currentMessage)
+            {
+                default:
+                    // move on to next message
+                    PlayNextMessage(false);
+                    break;
+            }
+        }
     }
 
-    void onClickTrigger()
+    public void onClickTrigger()
     {
         // check if trigger can be enabled now
         if (isTriggerEnabled)
         {
-            // move on to next message
-            Start_Coroutine();
+            buttonCount++;
+            
+            // first time that button is pressed
+            if (buttonCount == 1)
+            {
+                textDisplay.text = displayTutorialMessages[currentMessage - 1] + "\n Keep pressing until you reach 10";
+            }
+            textCount.text = buttonCount.ToString();
 
-            isTriggerEnabled = false;
+            if (buttonCount >= 10)
+            {                
+                // move on to next message
+                PlayNextMessage(true);
+            }
         }
     }
 
-    void StartExperiment()
-    {
-        // Start coroutine.
-        IEnumerator endCoroutine = CountdownRoutine(1);
-        StartCoroutine(endCoroutine);
-        
-    }
-
-    private IEnumerator CountdownRoutine(float waitTime)
+    private IEnumerator CountdownRoutine(float waitTime, string message, int testID)
     {
         yield return new WaitForSeconds(waitTime);
-        
+
         if (countdownTime <= 0)
         {
-            SceneManager.LoadScene("MainScene");
+            Debug.Log("Tutorial Ended");
+            textDisplay.gameObject.SetActive(false);
+            StartExperiment(testID);
         }
-        textDisplay.text = displayMessages[currentMessage-1] + countdownTime + " seconds";
-        countdownTime--;
 
-        StartExperiment();
+        else
+        {
+            textCount.gameObject.SetActive(false);
+            textDisplay.text = message + "\n It starts in: " + countdownTime + " seconds";
+            countdownTime--;
+
+            // Start coroutine.
+            IEnumerator endCoroutine = CountdownRoutine(1, message, testID);
+            StartCoroutine(endCoroutine);
+        }
     }
+
+    void StartExperiment(int testID)
+    {
+        currentMessage = 0;
+        if (testID == 1)
+        {
+            //GetComponent<AppManager>().startPartOne();
+
+            StartMidTutorial();
+        }
+        else
+        {
+            GetComponent<AppManager>().startPartTwo();
+        }
+    }
+
+    public void StartMidTutorial()
+    {
+        textDisplay.text = "";// clear messages on screen
+        textDisplay.gameObject.SetActive(true);
+        PlayNextMessage(false);
+    }
+
+
+
+
 
 }
 

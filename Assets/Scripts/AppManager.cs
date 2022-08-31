@@ -5,68 +5,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-/*
- * This file contains the experiment protocol with the following features:
- *  1. Start recording Eye Gaze
- *  2. Starts the Tutorial Phase
- */
 
 
-[RequireComponent(typeof(ViveSR.anipal.Eye.SRanipal_Eye_Framework))]
 public class AppManager : MonoBehaviour
 {
     [Header("Data collection Settings")]
-    [SerializeField] private bool saveData;
-    public string filename;
-    public int participantID;
     private static StreamWriter writer;
 
     [Header("Protocol Settings")]
-    [SerializeField] private float firstWaitTime;
+    [SerializeField] private string pathToKeywords1;
+    [SerializeField] private string pathToKeywords2;
     [SerializeField] private int nRep; // total number of trials per category
     [SerializeField] private List<GameObject> AuditoryStimuli; // list of auditory stimuli
     [SerializeField] private List<GameObject> AudioVisualStimuli; // list of AV stimuli
+    [SerializeField] [Range(0, 2500)] private int timeBeforeStimuli = 0; // time before stimuli in miliseconds
     GameObject[] experimentTrials;
-    [SerializeField] private bool paradigmReversed; // use this to pause and play a different message to users
-    [SerializeField] private AudioSource mainAudio;
 
-    // interval in between stimuli in miliseconds
-    [SerializeField] [Range(3000, 5000)] private int intervalMin;
-    [SerializeField] [Range(5000, 10000)] private int intervalMax = 5000;
+    [Header("Target")]
+    [SerializeField] GameObject targetSpeaker;
+    public AudioClip secondClip;
+
+
+    float targetTime = 0;
+    List<float> keywordTimestamps;
     System.Random rnd;
+    private bool timerOn = false;
 
     int currentIndex;
-    bool playNext = true;
-
-    // timer settings
-    bool timerOn = true;
-    float targetTime;
 
     void Start(){
+        
         rnd = new System.Random(); // use this to generate random values
-
-        if (saveData)
-        {
-            StartEyeGazeData(); // enable eye tracker data collection
-            StartControllerData(); // controller data
-            CreateDataFile(); // stimuli data
-        }
-        else
-        {
-            Debug.LogWarning("No data is being collected");
-        }
 
         // generate array with stimuli
         FillTrialsArray();
 
-        // ready to play first trial
-        playNext = true;
-
-        // timer initial value before the first trial begins
-        targetTime = firstWaitTime;
+        // list with timestamps for keywords
+        readCSV(pathToKeywords1); //@"Assets\GameResources\Auditive\Stories\keywords_The House that Jack Built.txt"
     }
 
-    void CreateDataFile(){
+    void readCSV(string filePath)
+    {
+        float previousPos = 0;
+        using (var reader = new StreamReader(filePath))
+        {
+            keywordTimestamps = new List<float>();
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                var values = line.Split('\t');
+
+                var seconds = values[0].Split(':');
+                float keyword_pos = float.Parse(seconds[0]) * 60 + float.Parse(seconds[1]);
+
+                keywordTimestamps.Add(keyword_pos - previousPos);
+
+                if (keywordTimestamps.Count > 0)
+                {
+                    previousPos = keyword_pos;
+                }
+
+                
+            }
+            targetTime = keywordTimestamps.ElementAt(0) - rnd.Next(timeBeforeStimuli) / 1000;
+            keywordTimestamps.RemoveAt(0);
+        }
+    }
+
+    public void CreateDataFile(int participantID, string filename)
+    {
         // get current timestamp
         var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
@@ -77,49 +84,61 @@ public class AppManager : MonoBehaviour
         writer = new StreamWriter(string.Format("Data/Trials/{0}{1}{2}_{3}.txt", participantID, "PERFORMANCE", filename, unixTimestamp));
 
         // write header to the file
-        string header = "timestamp, id, stimulus_type, name, duration, intensity";
+        string header = "timestamp, id, stimulus_type, name, duration";
         writer.WriteLine(header);
     }
 
     void SaveData(string input){
+        if (writer == null)
+        {
+            return;
+        }
         writer.WriteLine(input); 
     }
 
+
+    public void startPartOne()
+    {
+        targetSpeaker.SetActive(true);
+        targetSpeaker.GetComponent<AudioSource>().Play();
+        timerOn = true;
+    }
+
+    public void startPartTwo()
+    {
+        // generate array with stimuli
+        FillTrialsArray();
+
+        // list with timestamps for keywords
+        readCSV(pathToKeywords2);
+
+        targetSpeaker.SetActive(true);
+        targetSpeaker.GetComponent<AudioSource>().clip = secondClip;
+        targetSpeaker.GetComponent<AudioSource>().Play();
+        timerOn = true;
+    }
     private void Update(){
         if (timerOn)
         {
             targetTime -= Time.deltaTime;
-
             if (targetTime <= 0.0f)
             {
                 timerOn = false;
-                //reset timer
-                targetTime = firstWaitTime;
-
-                // play trial after timer is finished
-                StartTrial();
+                // play first trial after timer is finished
+                StartTrial();  
             }
 
             return; // always stop here if timer is on
         }
 
-        if (playNext)
+        // reaching the end of experiment
+        if(currentIndex >= experimentTrials.Length)
         {
-            // check if not in the middle of test and make sure this will run only once
-            if(currentIndex >= experimentTrials.Length)
-            {
-                // pause trials and return message and timer
-                Debug.Log("Reached end of experiment");
-                Time.timeScale = 0;
+            // pause trials and return message and timer
+            Debug.Log("Reached middle of experiment");
 
-                Application.Quit();
-            }
-            if (!mainAudio.isPlaying)
-            {
-                Debug.Log("Reached end of experiment");
-            }
-            StartTrial();
-        }
+            Application.Quit();
+        }          
     }
 
     void FillTrialsArray(){
@@ -146,19 +165,7 @@ public class AppManager : MonoBehaviour
 
     }
 
-    void StartEyeGazeData(){
-        // enable eye gaze data
-        GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEyeDataCallback = true;
-        GetComponent<ViveSR.anipal.Eye.SRanipal_Eye_Framework>().EnableEye = true;
-        gameObject.AddComponent<EyeTracker_DataCollection>();           
-    }
-
-    void StartControllerData(){
-        gameObject.AddComponent<ControllerData>();
-    }
-
     void StartTrial(){
-        playNext = false;
         StartCoroutine(PlayTrial());
     }
 
@@ -167,9 +174,14 @@ public class AppManager : MonoBehaviour
         // get current timestamp
         var trial_start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-        if (experimentTrials.Length <= 0 || currentIndex > experimentTrials.Length)
+        if (experimentTrials.Length <= 0 || keywordTimestamps.Count <= 0)
         {
             Debug.Log("No trial gameobjects in the list");
+
+            // move to mid phase
+            GetComponent<TutorialManager>().StartMidTutorial();
+
+            targetSpeaker.SetActive(false);
         }
         else
         {
@@ -181,39 +193,38 @@ public class AppManager : MonoBehaviour
             currentIndex++; // move pointer forward
         }
 
-        int interval = rnd.Next(intervalMin, intervalMax);
-        yield return new WaitForSeconds(interval/1000);
+        // interval is based on the imported csv file
+        targetTime = keywordTimestamps.ElementAt(0) - rnd.Next(timeBeforeStimuli) / 1000;
+        keywordTimestamps.RemoveAt(0);
 
+        yield return new WaitForSeconds(targetTime);
+
+        
         //save data
         var trial_duration = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - trial_start;
         string data_row;
         if (currentObject == null)
         {
-            data_row = string.Format("{0},{1},{2},{3},{4}",
-            trial_start, currentIndex, "null", "null", trial_duration, "null");
+            data_row = string.Format("{0},{1},{2},{3}",
+            trial_start, currentIndex, "null", "null", trial_duration);
         }
         else
         {
             TrialInfo objectInfo = currentObject.GetComponent<TrialInfo>();
             string stimulus_type = objectInfo.Type.ToString();
             string stimulus_name = objectInfo.name;
-            int stimulus_intensity = objectInfo.Intensity;
-            data_row = string.Format("{0},{1},{2},{3},{4}",
-            trial_start, currentIndex, stimulus_type, stimulus_name, trial_duration, stimulus_intensity);
+            data_row = string.Format("{0},{1},{2},{3}",
+            trial_start, currentIndex, stimulus_type, stimulus_name, trial_duration);
         }
 
-        if (saveData)
-        {
-            SaveData(data_row);
-        }
-
+        SaveData(data_row);
 
         // enable next trial
-        playNext = true;
+        StartTrial();
     }
 
     void OnApplicationQuit(){
-        if (!saveData)
+        if (writer == null)
         {
             return;
         }
@@ -227,11 +238,5 @@ public class AppManager : MonoBehaviour
         {
             Debug.Log(ex.Message);
         }
-    }
-
-    // trigger this after 
-    public void ContinueTrials(){
-      // unpause game
-      Time.timeScale = 1;
     }
 }

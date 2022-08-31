@@ -72,7 +72,6 @@ public class CharacterWalking : MonoBehaviour
         }
         else if (audioFootsteps.isPlaying)
         {
-            Debug.Log("here");
             stopMovement();
         }
         else

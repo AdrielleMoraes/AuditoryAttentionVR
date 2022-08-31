@@ -11,13 +11,13 @@
 /[Mm]emoryCaptures/
 /[Dd]ata/
 
-*desktop.ini
-*desktop.ini.meta
+*.ini
+
 *delete_all_desktop_ini.bat
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
-
+*desktop.ini.meta
 # Uncomment this line if you wish to ignore the asset store tools plugin
 /[Aa]ssets/AssetStoreTools*
 

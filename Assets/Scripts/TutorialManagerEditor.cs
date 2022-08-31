@@ -12,9 +12,17 @@ public class TutorialManagerEditor : Editor
 
         TutorialManager tutorial = (TutorialManager)target;
 
-        if (GUILayout.Button("Play Next Message"))
+        if (GUILayout.Button("Play Next Tutorial Message"))
         {
-            tutorial.Start_Coroutine();
+            tutorial.PlayNextMessage(true);
+        }
+        if (GUILayout.Button("Click Trigger"))
+        {
+            tutorial.onClickTrigger();
+        }
+        if (GUILayout.Button("Play Next Mid Message"))
+        {
+            tutorial.PlayNextMessage(false);
         }
     }
 
