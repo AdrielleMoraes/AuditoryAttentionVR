@@ -11,7 +11,9 @@
 /[Mm]emoryCaptures/
 /[Dd]ata/
 
-
+*desktop.ini
+*desktop.ini.meta
+*delete_all_desktop_ini.bat
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
